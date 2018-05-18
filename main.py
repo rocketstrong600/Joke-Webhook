@@ -1,7 +1,9 @@
 import json
+import urllib3
 
 from flask import Flask, request, make_response, jsonify
 
+httpgetter = urllib3.PoolManager()
 app = Flask(__name__)
 log = app.logger
 
@@ -19,7 +21,7 @@ def webhook():
         return 'json error'
 
     if action == 'joke':
-        res = joke(req)
+        res = joke()
     else:
         log.error('Unexpected action.')
 
@@ -29,9 +31,9 @@ def webhook():
     return make_response(jsonify({'fulfillmentText': res}))
 
 
-def joke(req):
+def joke():
     baseurl = "http://api.icndb.com/jokes/random"
-    result = urlopen(baseurl).read()
+    result = httpgetter.request('GET', baseurl).data
     data = json.loads(result)
     valueString = data.get('value')
     joke = valueString.get('joke')
