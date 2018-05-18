@@ -139,15 +139,7 @@ def weather_activity(req):
 def makeWebhookResultForGetJoke(data):
     valueString = data.get('value')
     joke = valueString.get('joke')
-    speechText = joke
-    displayText = joke
-    return {
-        "speech": speechText,
-        "displayText": displayText,
-        # "data": data,
-        # "contextOut": [],
-        "source": "apiai-weather-webhook-sample"
-    }
+    return joke
 
 def weather_condition(req):
     """Returns a string containing a human-readable response to the user
