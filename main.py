@@ -10,7 +10,16 @@ log = app.logger
 
 @app.route('/', methods=['GET', 'POST'])
 def webhook():
-    res = joke()
+    req = request.get_json()
+    try:
+        action = req.get('queryResult').get('action')
+    except AttributeError:
+        return "wrong json"
+        
+    if action == 'joke.get':
+        res = joke()
+    else:
+        res = "action not found"
     return make_response(jsonify({'fulfillmentText': res}))
 
 
