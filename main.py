@@ -46,7 +46,7 @@ def webhook():
 
     if action == 'weather':
         res = weather(req)
-    elif action == 'get.joke':
+    elif action == 'joke.get':
         baseurl = "http://api.icndb.com/jokes/random"
         result = urlopen(baseurl).read()
         data = json.loads(result)
