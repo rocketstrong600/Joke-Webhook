@@ -46,6 +46,11 @@ def webhook():
 
     if action == 'weather':
         res = weather(req)
+    elif action == 'get.joke':
+        baseurl = "http://api.icndb.com/jokes/random"
+        result = urlopen(baseurl).read()
+        data = json.loads(result)
+        res = makeWebhookResultForGetJoke(data)
     elif action == 'weather.activity':
         res = weather_activity(req)
     elif action == 'weather.condition':
@@ -130,6 +135,19 @@ def weather_activity(req):
     # get the response
     return forecast.get_activity_response()
 
+
+def makeWebhookResultForGetJoke(data):
+    valueString = data.get('value')
+    joke = valueString.get('joke')
+    speechText = joke
+    displayText = joke
+    return {
+        "speech": speechText,
+        "displayText": displayText,
+        # "data": data,
+        # "contextOut": [],
+        "source": "apiai-weather-webhook-sample"
+    }
 
 def weather_condition(req):
     """Returns a string containing a human-readable response to the user
