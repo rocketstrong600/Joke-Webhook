@@ -8,7 +8,7 @@ app = Flask(__name__)
 log = app.logger
 
 
-@app.route('/' methods=['POST'])
+@app.route('/', methods=['GET', 'POST'])
 def webhook():
     res = joke()
     return make_response(jsonify({'fulfillmentText': res}))
