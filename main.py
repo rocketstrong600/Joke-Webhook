@@ -8,22 +8,9 @@ app = Flask(__name__)
 log = app.logger
 
 
-@app.route('/', methods=['POST'])
+@app.route('/')
 def webhook():
-    req = request.get_json(silent=True, force=True)
-    try:
-        action = req.get("queryResult").get("action")
-    except AttributeError:
-        return 'json error'
-
-    if action == 'joke':
-        res = joke()
-    else:
-        log.error('Unexpected action.')
-
-    print('Action: ' + action)
-    print('Response: ' + res)
-
+    res = joke()
     return make_response(jsonify({'fulfillmentText': res}))
 
 
