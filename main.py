@@ -18,6 +18,7 @@ def webhook():
         
     if action == 'joke.get':
         res = joke()
+        res = '<speak><audio src="https://actions.google.com/sounds/v1/cartoon/slide_whistle.ogg">did not get your audio file</audio></speak>'
     else:
         res = "action not found"
     return make_response(jsonify({'fulfillmentText': res}))
